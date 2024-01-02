@@ -1,0 +1,13 @@
+
+spring:
+   
+    data:
+        mongodb:
+            database: localDB
+            host: localhost
+            port: 27017
+
+server:
+    error:
+       include-message: always
+       include-binding-errors: always
