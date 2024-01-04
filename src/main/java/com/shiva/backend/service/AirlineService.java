@@ -16,7 +16,7 @@ public class AirlineService {
     }
 
     public void SaveInitialData(AirlineReq req) {
-        new AirLine(req);
+        airlineRepo.save(new AirLine(req)).subscribe();
     }
 
 }
