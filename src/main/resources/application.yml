@@ -6,6 +6,13 @@ spring:
             database: localDB
             host: localhost
             port: 27017
+    security:
+        oauth2:
+            client:
+                registration:
+                    google :
+                        clientId: 533167015585-lbuutppje4gvt2drst0jeadoscq7v9u5.apps.googleusercontent.com
+                        clientSecret: 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
 
 server:
     error:
