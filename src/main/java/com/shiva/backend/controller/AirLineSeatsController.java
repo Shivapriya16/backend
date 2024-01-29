@@ -20,6 +20,8 @@ import com.shiva.backend.payloads.AirlineReq;
 import com.shiva.backend.repositories.AirlineRepo;
 import com.shiva.backend.service.AirlineService;
 
+import lombok.NonNull;
+
 @RestController
 @RequestMapping(produces = "application/json")
 public class AirLineSeatsController {
@@ -45,7 +47,7 @@ public class AirLineSeatsController {
     // send Empty seats
     // get class enum
     @GetMapping("empty_seats/{id}")
-    public ResponseEntity<?> sendEmptySeats(@PathVariable(name = "id") String id,
+    public ResponseEntity<?> sendEmptySeats(@PathVariable(name = "id") @NonNull String id,
             @RequestParam(required = true, name = "flightClass") String flightClass) {
         try {
 
@@ -70,7 +72,11 @@ public class AirLineSeatsController {
             @RequestParam(required = true, name = "seatNumber") List<Integer> seatNumbers) {
         try {
             AirlineService service = new AirlineService(airlineRepo, mongoTemplate);
-            service.selectSeats(id, flightClass, seatNumbers);
+            if (id != null) {
+                service.selectSeats(id, flightClass, seatNumbers);
+            } else {
+                throw new RuntimeException("id is null");
+            }
             return new ResponseEntity<String>(("success"), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<Error>(HttpStatus.BAD_REQUEST);
@@ -84,7 +90,12 @@ public class AirLineSeatsController {
             @RequestParam(required = true, name = "noOfSeats") Integer noOfSeats) {
         try {
             AirlineService service = new AirlineService(airlineRepo, mongoTemplate);
-            service.selectSeatsRandomly(id, flightClass, noOfSeats);
+            if (id != null) {
+                service.selectSeatsRandomly(id, flightClass, noOfSeats);
+            } else {
+                throw new RuntimeException("id is null");
+            }
+
             return new ResponseEntity<String>(("success"), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<Error>(HttpStatus.BAD_REQUEST);
@@ -98,7 +109,11 @@ public class AirLineSeatsController {
             @RequestParam(required = true, name = "seatNumber") List<Integer> seatNumbers) {
         try {
             AirlineService service = new AirlineService(airlineRepo, mongoTemplate);
-            service.deleteSeats(id, flightClass, seatNumbers);
+            if (id != null) {
+                service.deleteSeats(id, flightClass, seatNumbers);
+            } else {
+                throw new RuntimeException("id is null");
+            }
             return new ResponseEntity<String>(("success"), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<Error>(HttpStatus.BAD_REQUEST);
